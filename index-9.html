@@ -1676,6 +1676,32 @@ button,.kid-tile,.card,.feature-card,.category-card{border-radius:20px!important
 .eduman-writing-yellow-white .ai-lang-btn.active,.eduman-writing-yellow-white .ai-tool-btn:not(.secondary),.eduman-writing-yellow-white .ai-tool-back{background:#FFD21F!important;color:#5D4037!important;border-color:#FFD21F!important}
 .eduman-writing-yellow-white .ai-tool-btn.secondary{background:#fff!important;color:#8A6500!important;border:2px solid #FFD21F!important}
 </style>
+
+<style id="eduman-ai-lesson-explainer-style">
+/* Additive AI Lesson Explainer: Eduman yellow-and-white styling */
+.lesson-ai-wrap{padding:4px 0 24px;color:#4e3b14}
+.lesson-ai-back{margin-bottom:12px}
+.lesson-ai-card{background:#fff;border:2px solid #ffda4a;border-radius:22px;padding:15px;margin-bottom:13px;box-shadow:0 5px 16px rgba(120,90,0,.08)}
+.lesson-ai-hero{background:linear-gradient(135deg,#fff9d9,#fff);text-align:center}
+.lesson-ai-hero-icon{font-size:42px;line-height:1.2}
+.lesson-ai-title{font-family:'Fredoka',sans-serif;font-size:22px;font-weight:800;color:#6a4b00;margin:5px 0}
+.lesson-ai-sub{font-size:12px;color:#79632c;line-height:1.5}
+.lesson-ai-label{display:block;font-size:12px;font-weight:900;margin:11px 0 6px;color:#624b10}
+.lesson-ai-select,.lesson-ai-textarea{width:100%;border:2px solid #f0d46a;border-radius:13px;background:#fffef8;padding:11px;font:inherit;font-size:13px;color:#443719;outline:none}
+.lesson-ai-textarea{min-height:125px;resize:vertical;user-select:text}
+.lesson-ai-select:focus,.lesson-ai-textarea:focus{border-color:#eab900}
+.lesson-ai-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.lesson-ai-btn{border:0;border-radius:13px;padding:11px 13px;font-size:12px;font-weight:900;cursor:pointer;background:#ffd21f;color:#553f00;box-shadow:0 3px 0 #e6b900}
+.lesson-ai-btn.secondary{background:#fff8d7;border:1px solid #f1d66b;box-shadow:none}
+.lesson-ai-btn:disabled{opacity:.55;cursor:wait}
+.lesson-ai-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.lesson-ai-preview{display:none;margin-top:10px;max-width:100%;max-height:220px;border-radius:14px;border:2px solid #ffdf68;object-fit:contain}
+.lesson-ai-status{font-size:12px;font-weight:800;line-height:1.5;margin-top:10px;color:#7a5d00;white-space:pre-wrap}
+.lesson-ai-result{white-space:pre-wrap;user-select:text;line-height:1.65;font-size:14px;color:#3f3520;overflow-wrap:anywhere}
+.lesson-ai-small{font-size:10px;color:#806e43;line-height:1.5;margin-top:8px}
+.lesson-ai-speed{width:100%;accent-color:#e6b900}
+</style>
+
 </head>
 <body>
 
@@ -2526,6 +2552,9 @@ button,.kid-tile,.card,.feature-card,.category-card{border-radius:20px!important
         case 'home':
           content.innerHTML = renderHomeScreen();
           break;
+        case 'months':
+          content.innerHTML = renderEdumanMonthsScreen();
+          break;
         case 'languagehub':
           content.innerHTML = renderLanguageLearningHub();
           break;
@@ -2555,6 +2584,10 @@ button,.kid-tile,.card,.feature-card,.category-card{border-radius:20px!important
         case 'readinghelper':
           content.innerHTML = renderReadingHelperScreen();
           initReadingHelper();
+          break;
+        case 'lessonexplainer':
+          content.innerHTML = renderLessonExplainerScreen();
+          initLessonExplainer();
           break;
         case 'testcreation':
           content.innerHTML = renderTestCreationScreen();
@@ -2930,6 +2963,7 @@ button,.kid-tile,.card,.feature-card,.category-card{border-radius:20px!important
         {icon:'அ',en:'TAMIL',ta:'தமிழ்',sub:'எழுத்துக்கள் • கேள்',cls:'kt-green',act:"openLanguageLearning('ta'); return false;"},
         {icon:'➕',en:'MATHS',ta:'கணிதம்',sub:ta?'எண்கள் • கூட்டல் • கழித்தல்':'Numbers • Addition • Subtraction',cls:'kt-yellow',act:"switchTab('numbers')"},
         {icon:'🔭',en:'SCIENCE',ta:'அறிவியல்',sub:ta?'ஆராய்ந்து கண்டறியுங்கள்':'Explore & discover',cls:'kt-cyan',act:"switchTab('science')"},
+        {icon:'🗓️',en:'MONTHS',ta:'மாதங்கள்',sub:ta?'தமிழ் • ஆங்கிலம் • கேள்':'Tamil • English • Listen',cls:'kt-green',act:"switchTab('months')"},
       ];
       const special = [
         {icon:'👩‍🏫',en:'AI TEACHER',ta:'AI ஆசிரியர்',sub:ta?'ஆசிரியர்களுடன் கற்க':'Learn with teachers',cls:'kt-orange',act:"openAiTeacher()"},
@@ -2937,7 +2971,8 @@ button,.kid-tile,.card,.feature-card,.category-card{border-radius:20px!important
         {icon:'🎮',en:'GAME STUDIO',ta:'விளையாட்டு மையம்',sub:ta?'விளையாடு • கற்றுக்கொள்':'Play & learn',cls:'kt-purple',act:"openGamesCenter()"},
         {icon:`<img class="ask-eduman-tile-logo" src="${EDUMAN_APP_LOGO}" alt="Eduman">`,en:'ASK WITH EDUMAN',ta:'எடுமனிடம் கேள்',sub:ta?'கேள் • கற்று • பேசு':'Ask • Learn • Talk',cls:'kt-blue',act:"switchTab('aibuddy')"},
         {icon:'📖',en:'READING HELPER',ta:'வாசிப்பு உதவி',sub:ta?'இணை • படி • கேள்':'Attach • Read • Hear',cls:'kt-yellow',act:"switchTab('readinghelper')"},
-        {icon:'📝',en:'TEST CREATION',ta:'தேர்வு உருவாக்கம்',sub:ta?'உருவாக்கு • தேர்வு எழுது':'Create • Take tests',cls:'kt-cyan',act:"openTestCreation()"}
+        {icon:'✨',en:'AI LESSON EXPLAINER',ta:'AI பாட விளக்கம்',sub:ta?'படம் • கேள்வி • எளிய விளக்கம்':'Photo • Ask • Understand',cls:'kt-orange',act:"switchTab('lessonexplainer')"},
+        {icon:'📝',en:'TEST CREATION',ta:'தேர்வு உருவாக்கம்',sub:ta?'உருவாக்கு • தேர்வு எழுது':'Create • Take tests',cls:'kt-cyan',act:"openTestCreation()"},
       ];
       const extra = [
         {icon:'📖',en:'STORIES',ta:'கதைகள்',sub:ta?'பார் • கேள்':'Watch & listen',cls:'kt-blue',act:"switchTab('stories')"},
@@ -8672,7 +8707,7 @@ window.openHearWrite = window.openHearWrite || function(){
   const ACCESS_CODE='Eduman_523';
   const KEY='eduman_all_features_unlocked_v3';
   const FREE_TABS=new Set(['home','languagehub','alphabets','numbers','math','science','testcreation']);
-  const LOCKED_TABS=new Set(['aiteacher','aitools','games','aibuddy','readinghelper','stories','rhymes','drawing','activities']);
+  const LOCKED_TABS=new Set(['aiteacher','aitools','games','aibuddy','readinghelper','lessonexplainer','stories','rhymes','drawing','activities']);
   let unlocked=false, pendingAction=null;
   try { unlocked=localStorage.getItem(KEY)==='1'; } catch(e) {}
 
@@ -8687,7 +8722,7 @@ window.openHearWrite = window.openHearWrite || function(){
     if(wrap){wrap.style.display='flex';wrap.querySelector('input')?.focus();return;}
     wrap=document.createElement('div');wrap.id='edumanAccessGate';
     wrap.style.cssText='position:fixed;inset:0;z-index:2147483647;background:rgba(20,25,35,.76);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
-    wrap.innerHTML=`<div style="width:min(360px,100%);background:#fff;border-radius:24px;padding:24px;text-align:center;box-shadow:0 20px 60px #0004;font-family:Nunito,Arial,sans-serif;box-sizing:border-box"><div style="font-size:42px">🔐</div><h2 style="margin:8px 0;color:#5d4037">Unlock Eduman</h2><p style="font-size:14px;color:#6d635d;margin-bottom:16px">Enter your access code to unlock all locked features.</p><input id="edumanAccessCode" type="password" autocomplete="off" placeholder="Enter access code" style="width:100%;padding:13px;border:2px solid #ffd54f;border-radius:12px;font-size:16px;box-sizing:border-box"><div id="edumanAccessError" style="color:#c62828;font-size:12px;font-weight:800;min-height:20px;margin-top:6px"></div><button type="button" id="edumanAccessSubmit" style="width:100%;padding:13px;border:0;border-radius:13px;background:#ffd21f;color:#5d4037;font-weight:900;font-size:15px;margin-top:6px">Unlock All Features</button><button type="button" id="edumanAccessCancel" style="margin-top:10px;border:0;background:transparent;padding:8px 16px;font-weight:800;color:#666">Cancel</button></div>`;
+    wrap.innerHTML=`<div style="width:min(360px,100%);background:#fff;border-radius:24px;padding:24px;text-align:center;box-shadow:0 20px 60px #0004;font-family:Nunito,Arial,sans-serif;box-sizing:border-box"><div style="font-size:42px">🔐</div><h2 style="margin:8px 0;color:#5d4037">Unlock Eduman</h2><p style="font-size:14px;color:#6d635d;margin-bottom:12px">Enter your access code to unlock all locked features.</p><p style="font-size:13px;line-height:1.5;color:#5d4037;font-weight:800;margin:0 0 5px">Click the whatsapp button to connect with us and get the code</p><p lang="ta" style="font-family:'Noto Sans Tamil',Arial,sans-serif;font-size:13px;line-height:1.6;color:#5d4037;font-weight:800;margin:0 0 12px">வாட்ஸ்அப் பட்டனை கிளிக் செய்து எங்களிடம் வாட்ஸ் அப்பில் code-யை கேட்கவும்</p><a id="edumanWhatsAppButton" href="https://wa.me/919489287798?text=Hi%2C%20I%20would%20like%20to%20get%20the%20Eduman%20unlock%20code." target="_blank" rel="noopener noreferrer" style="display:block;width:100%;padding:13px 10px;border-radius:13px;background:#25D366;color:#fff;text-decoration:none;font-weight:900;font-size:15px;margin-bottom:16px;box-sizing:border-box">🟢 WhatsApp Us</a><input id="edumanAccessCode" type="password" autocomplete="off" placeholder="Enter access code" style="width:100%;padding:13px;border:2px solid #ffd54f;border-radius:12px;font-size:16px;box-sizing:border-box"><div id="edumanAccessError" style="color:#c62828;font-size:12px;font-weight:800;min-height:20px;margin-top:6px"></div><button type="button" id="edumanAccessSubmit" style="width:100%;padding:13px;border:0;border-radius:13px;background:#ffd21f;color:#5d4037;font-weight:900;font-size:15px;margin-top:6px">Unlock All Features</button><button type="button" id="edumanAccessCancel" style="margin-top:10px;border:0;background:transparent;padding:8px 16px;font-weight:800;color:#666">Cancel</button></div>`;
     document.body.appendChild(wrap);
     const input=wrap.querySelector('#edumanAccessCode');
     function submit(){
@@ -8723,7 +8758,7 @@ window.openHearWrite = window.openHearWrite || function(){
   function getAction(el){return (el?.getAttribute?.('onclick')||'').toLowerCase().replace(/\s+/g,'');}
   function isLockedLaunch(el){
     const action=getAction(el);
-    if(/switchtab\(['"]?(aiteacher|aitools|games|aibuddy|readinghelper|stories|rhymes|drawing)['"]?\)/.test(action))return true;
+    if(/switchtab\(['"]?(aiteacher|aitools|games|aibuddy|readinghelper|lessonexplainer|stories|rhymes|drawing)['"]?\)/.test(action))return true;
     if(/open(aiteacher|hearwrite|gamescenter)\(/.test(action))return true;
     // Some sub-options launch a locked area through helper functions instead of switchTab.
     if(/setaitoolmode\(|startaibuddy|openreadinghelper|openstory|openrhyme|opendrawing/.test(action))return true;
@@ -8750,6 +8785,267 @@ window.openHearWrite = window.openHearWrite || function(){
     });
   },true);
 })();
+</script>
+
+
+<style id="eduman-remove-phone-template">
+/* Remove the outer phone/mockup frame while preserving the app's features and inner cards. */
+html, body { margin: 0 !important; padding: 0 !important; }
+.app, .app-shell, .phone, .dashboard, .main-content { border-radius: 0 !important; box-shadow: none !important; }
+#edumanAuthOverlay { padding: 0 !important; background: #fff1a8 !important; }
+.eda-phone { width: 100% !important; max-width: none !important; min-height: 100vh !important; margin: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+@media (min-width: 481px) { .eda-phone { min-height: 100vh !important; border-radius: 0 !important; box-shadow: none !important; } }
+</style>
+
+<script id="eduman-ai-lesson-explainer-script">
+/*
+ * Deployment note: set this to the deployed Cloudflare Worker URL.
+ * Never put an OpenAI API key in this HTML file.
+ */
+const EDUMAN_LESSON_API_URL = 'PASTE_YOUR_CLOUDFLARE_WORKER_URL_HERE';
+let lessonAIImageFile = null;
+let lessonAIRecognition = null;
+let lessonAIResultText = '';
+
+function renderLessonExplainerScreen(){
+  const ta = (typeof State !== 'undefined' && State.language === 'ta');
+  return `<div class="lesson-ai-wrap">
+    <button class="btn-nav lesson-ai-back" onclick="switchTab('home')">← ${ta?'முகப்புக்குத் திரும்பு':'Back to Home'}</button>
+    <section class="lesson-ai-card lesson-ai-hero">
+      <div class="lesson-ai-hero-icon">✨📚</div>
+      <h2 class="lesson-ai-title">${ta?'AI பாட விளக்கம்':'AI Lesson Explainer'}</h2>
+      <p class="lesson-ai-sub">${ta?'உங்கள் பாடத்தை எழுதுங்கள், கேள்வியைப் பேசுங்கள் அல்லது பாடப்புத்தகப் படத்தை இணைக்கவும். எளிமையாகக் கற்றுக்கொள்ளுங்கள்.':'Type a lesson, speak a question, or attach a textbook photo. Learn step by step in child-friendly language.'}</p>
+    </section>
+    <section class="lesson-ai-card">
+      <label class="lesson-ai-label" for="lessonAiLanguage">${ta?'விளக்க மொழி':'Explanation language'}</label>
+      <select class="lesson-ai-select" id="lessonAiLanguage">
+        <option value="ta" ${ta?'selected':''}>தமிழ் (Tamil)</option>
+        <option value="en" ${ta?'':'selected'}>English</option>
+      </select>
+      <label class="lesson-ai-label" for="lessonAiGrade">${ta?'வகுப்பு':'School standard'}</label>
+      <select class="lesson-ai-select" id="lessonAiGrade">
+        <option value="1">Standard 1 / வகுப்பு 1</option><option value="2">Standard 2 / வகுப்பு 2</option>
+        <option value="3" selected>Standard 3 / வகுப்பு 3</option><option value="4">Standard 4 / வகுப்பு 4</option><option value="5">Standard 5 / வகுப்பு 5</option>
+      </select>
+      <label class="lesson-ai-label" for="lessonAiText">${ta?'பாடப் பகுதி அல்லது உங்கள் கேள்வி':'Lesson paragraph or your question'}</label>
+      <textarea id="lessonAiText" class="lesson-ai-textarea" placeholder="${ta?'இங்கே பாடத்தை அல்லது கேள்வியை எழுதுங்கள்…':'Paste a paragraph or type a question here…'}"></textarea>
+      <div class="lesson-ai-row" style="margin-top:10px">
+        <button type="button" class="lesson-ai-btn secondary" id="lessonAiSpeakQuestion">🎙️ ${ta?'கேள்வியைப் பேசு':'Speak question'}</button>
+        <button type="button" class="lesson-ai-btn secondary" id="lessonAiAttach">📷 ${ta?'பாடப் படம்':'Attach lesson photo'}</button>
+        <input class="lesson-ai-file" type="file" id="lessonAiPhoto" accept="image/*" capture="environment">
+      </div>
+      <img id="lessonAiPreview" class="lesson-ai-preview" alt="Attached textbook preview">
+      <div class="lesson-ai-row" style="margin-top:14px">
+        <button type="button" class="lesson-ai-btn" id="lessonAiExplain">✨ ${ta?'எளிமையாக விளக்கு':'Explain my lesson'}</button>
+        <button type="button" class="lesson-ai-btn secondary" id="lessonAiClear">${ta?'அழி':'Clear'}</button>
+      </div>
+      <div id="lessonAiStatus" class="lesson-ai-status" role="status" aria-live="polite"></div>
+      <p class="lesson-ai-small">${ta?'புகைப்படத்தில் உள்ள எழுத்துகளை AI படித்து விளக்க முயற்சிக்கும். தெளிவான படத்தைப் பயன்படுத்துங்கள்.':'For best results, take a clear, well-lit photo of the textbook page.'}</p>
+    </section>
+    <section class="lesson-ai-card" id="lessonAiOutputCard" hidden>
+      <h3 class="lesson-ai-title" style="text-align:left;font-size:18px">🌟 ${ta?'உங்கள் பாட விளக்கம்':'Your lesson explanation'}</h3>
+      <div id="lessonAiOutput" class="lesson-ai-result"></div>
+      <label class="lesson-ai-label" for="lessonAiSpeed">${ta?'குரல் வேகம்':'Speaking speed'}: <span id="lessonAiSpeedValue">0.8×</span></label>
+      <input class="lesson-ai-speed" id="lessonAiSpeed" type="range" min="0.6" max="1.2" step="0.1" value="0.8">
+      <div class="lesson-ai-row" style="margin-top:10px">
+        <button type="button" class="lesson-ai-btn" id="lessonAiRead">🔊 ${ta?'விளக்கத்தைக் கேள்':'Read explanation aloud'}</button>
+        <button type="button" class="lesson-ai-btn secondary" id="lessonAiStop">⏹ ${ta?'நிறுத்து':'Stop'}</button>
+      </div>
+    </section>
+  </div>`;
+}
+
+function initLessonExplainer(){
+  lessonAIImageFile = null; lessonAIResultText = '';
+  const byId = id => document.getElementById(id);
+  const status = byId('lessonAiStatus');
+  const photoInput = byId('lessonAiPhoto');
+  const preview = byId('lessonAiPreview');
+  const explainBtn = byId('lessonAiExplain');
+  if(!status || !photoInput || !explainBtn) return;
+
+  byId('lessonAiAttach').addEventListener('click',()=>photoInput.click());
+  photoInput.addEventListener('change',()=>{
+    const file=photoInput.files && photoInput.files[0];
+    if(!file)return;
+    if(!file.type.startsWith('image/')){status.textContent='Please choose an image file.';return;}
+    if(file.size>8*1024*1024){status.textContent='Please choose an image smaller than 8 MB.';photoInput.value='';return;}
+    lessonAIImageFile=file;
+    const reader=new FileReader();
+    reader.onload=()=>{preview.src=reader.result;preview.style.display='block';};
+    reader.readAsDataURL(file);
+    status.textContent='Textbook photo attached.';
+  });
+
+  byId('lessonAiSpeakQuestion').addEventListener('click',()=>{
+    const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SpeechRecognition){status.textContent='Voice input is not supported in this browser. Please type your question.';return;}
+    try{
+      if(lessonAIRecognition){lessonAIRecognition.stop();lessonAIRecognition=null;}
+      lessonAIRecognition=new SpeechRecognition();
+      lessonAIRecognition.lang=byId('lessonAiLanguage').value==='ta'?'ta-IN':'en-IN';
+      lessonAIRecognition.interimResults=false;lessonAIRecognition.maxAlternatives=1;
+      status.textContent='Listening… speak your question.';
+      lessonAIRecognition.onresult=e=>{
+        const transcript=e.results?.[0]?.[0]?.transcript||'';
+        const area=byId('lessonAiText');
+        area.value=(area.value.trim()?area.value.trim()+'\\n':'')+transcript;
+        status.textContent=transcript?'Voice question added.':'No speech detected. Please try again.';
+      };
+      lessonAIRecognition.onerror=e=>{status.textContent='Voice input could not start ('+(e.error||'unknown error')+'). You can type your question instead.';};
+      lessonAIRecognition.onend=()=>{lessonAIRecognition=null;};
+      lessonAIRecognition.start();
+    }catch(e){status.textContent='Could not start voice input. Please type your question.';}
+  });
+
+  byId('lessonAiClear').addEventListener('click',()=>{
+    byId('lessonAiText').value='';photoInput.value='';lessonAIImageFile=null;preview.removeAttribute('src');preview.style.display='none';
+    byId('lessonAiOutputCard').hidden=true;byId('lessonAiOutput').textContent='';lessonAIResultText='';
+    status.textContent='';window.speechSynthesis?.cancel();
+  });
+  const speed=byId('lessonAiSpeed');
+  speed.addEventListener('input',()=>byId('lessonAiSpeedValue').textContent=Number(speed.value).toFixed(1)+'×');
+  byId('lessonAiRead').addEventListener('click',()=>lessonAIReadAloud());
+  byId('lessonAiStop').addEventListener('click',()=>window.speechSynthesis?.cancel());
+
+  explainBtn.addEventListener('click',async()=>{
+    const text=byId('lessonAiText').value.trim();
+    if(!text&&!lessonAIImageFile){status.textContent='Please type a lesson/question or attach a textbook photo first.';return;}
+    if(!EDUMAN_LESSON_API_URL || EDUMAN_LESSON_API_URL.includes('PASTE_YOUR_CLOUDFLARE_WORKER_URL_HERE')){
+      status.textContent='Setup needed: deploy the Cloudflare Worker, then replace EDUMAN_LESSON_API_URL in this HTML with your Worker URL. Your API key must stay in the Worker secret, not here.';
+      return;
+    }
+    const original=explainBtn.textContent;
+    explainBtn.disabled=true;explainBtn.textContent='⏳ Creating explanation…';status.textContent='Sending your lesson securely to Eduman AI…';
+    try{
+      const payload={text,language:byId('lessonAiLanguage').value,grade:Number(byId('lessonAiGrade').value),style:'Explain for a child in Standards 1–5. Use simple words, a relatable example, difficult-word meanings, a short recap, and exactly three practice questions with answers. Be accurate and do not invent details that are unreadable in a photo.'};
+      if(lessonAIImageFile){
+        payload.image={mimeType:lessonAIImageFile.type||'image/jpeg',base64:await lessonAIFileToBase64(lessonAIImageFile)};
+      }
+      const response=await fetch(EDUMAN_LESSON_API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.error||('Server error ('+response.status+'). Check the Cloudflare Worker setup.'));
+      const explanation=typeof data.explanation==='string'?data.explanation:(typeof data.output_text==='string'?data.output_text:'');
+      if(!explanation)throw new Error('The AI returned an empty explanation. Please try again.');
+      lessonAIResultText=explanation;
+      byId('lessonAiOutput').textContent=explanation;
+      byId('lessonAiOutputCard').hidden=false;
+      status.textContent='Explanation ready! Read it or tap the speaker button.';
+    }catch(err){
+      status.textContent='Could not create the explanation: '+(err?.message||'Please check your internet connection and Worker setup.');
+    }finally{explainBtn.disabled=false;explainBtn.textContent=original;}
+  });
+}
+function lessonAIFileToBase64(file){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>{const value=String(reader.result||'');const comma=value.indexOf(',');if(comma<0){reject(new Error('Could not read image.'));return;}resolve(value.slice(comma+1));};
+    reader.onerror=()=>reject(new Error('Could not read the textbook photo.'));
+    reader.readAsDataURL(file);
+  });
+}
+function lessonAIReadAloud(){
+  if(!lessonAIResultText){return;}
+  if(!('speechSynthesis' in window)){const el=document.getElementById('lessonAiStatus');if(el)el.textContent='Speech playback is not supported on this device.';return;}
+  window.speechSynthesis.cancel();
+  const utterance=new SpeechSynthesisUtterance(lessonAIResultText);
+  const lang=document.getElementById('lessonAiLanguage')?.value||'en';
+  utterance.lang=lang==='ta'?'ta-IN':'en-IN';
+  utterance.rate=Number(document.getElementById('lessonAiSpeed')?.value||0.8);
+  window.speechSynthesis.speak(utterance);
+}
+</script>
+
+
+<style id="eduman-months-feature-css">
+.em-wrap{font-family:'Nunito','Noto Sans Tamil',sans-serif;color:#1B2F6E;padding:4px 0 22px;font-weight:700}
+.em-wrap *{box-sizing:border-box}
+.em-back{margin:0 0 12px}
+.em-hero{background:linear-gradient(135deg,#14539A,#00BFA5);border-radius:24px;padding:18px;color:white;margin-bottom:14px}
+.em-hero h2{font:700 23px 'Fredoka','Noto Sans Tamil',sans-serif;margin:0 0 6px}
+.em-hero p{font-size:13px;line-height:1.5;margin:0}
+.em-lang,.em-modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+.em-pill{border:2px solid #DDE2EA;background:#fff;color:#1B2F6E;border-radius:22px;padding:9px 14px;font-weight:800;font-size:13px}
+.em-pill.on{background:#14539A;border-color:#14539A;color:white}
+.em-sub{text-align:center;color:#6B7A99;font-size:13px;margin:8px 0}
+.em-chips{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 12px;scrollbar-width:none}
+.em-chip{flex:0 0 auto;min-width:76px;min-height:50px;border:2px solid #DDE2EA;border-radius:16px;background:white;padding:7px;color:#14539A;font-weight:800}
+.em-chip small{display:block;font-size:10px;margin-top:3px;color:#6B7A99}
+.em-chip.on{background:#14539A;border-color:#14539A;color:white}
+.em-chip.on small{color:#D9EBFF}
+.em-card{background:white;border-radius:26px;padding:22px 16px;text-align:center;box-shadow:0 8px 24px rgba(20,83,154,.08)}
+.em-big{width:104px;height:104px;border-radius:50%;margin:0 auto 12px;background:#FFD21F;display:grid;place-items:center;font:800 44px 'Fredoka','Noto Sans Tamil',sans-serif;color:#1B2F6E}
+.em-title{font:700 22px/1.4 'Fredoka','Noto Sans Tamil',sans-serif;margin:8px 0 12px;overflow-wrap:anywhere}
+.em-fact{background:#F4EAE1;border-radius:18px;padding:13px;text-align:left;font-size:14px;line-height:1.5;margin:14px 0}
+.em-hear{border:0;border-radius:24px;background:#FFD21F;padding:12px 20px;font-weight:800;color:#1B2F6E;box-shadow:0 4px 0 #F5B800}
+.em-pn{display:flex;justify-content:space-between;gap:8px;margin-top:16px}
+.em-pn button{border-radius:18px;padding:10px 14px;font-weight:800;border:2px solid #DDE2EA;background:#fff}
+.em-pn .next{background:#14539A;color:white;border-color:#14539A}
+.em-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.em-opt{border:2px solid #DDE2EA;background:white;border-radius:17px;padding:14px 6px;font-weight:800;color:#14539A;font-size:15px}
+.em-opt.good{background:#E7F6DD;border-color:#58B04A;color:#2E7D32}
+.em-opt.bad{background:#FDE5E4;border-color:#E53935;color:#E53935}
+.em-status{min-height:22px;font-size:13px;margin-top:12px;color:#2E7D32}
+</style>
+<script id="eduman-months-feature-script">
+const EM_TAMIL_MONTHS=[
+{ta:'சித்திரை',en:'Chithirai',l:'சி',e:'🌼',factTa:'தமிழ்ப் புத்தாண்டு சித்திரை மாதத்தில் பிறக்கிறது!',factEn:'The Tamil New Year begins in Chithirai!'},
+{ta:'வைகாசி',en:'Vaikasi',l:'வை',e:'🌸',factTa:'வைகாசி விசாகம் முருகப்பெருமானுக்குச் சிறப்பான நாள்.',factEn:'Vaikasi Visakam is a special day for Lord Murugan.'},
+{ta:'ஆனி',en:'Aani',l:'ஆ',e:'🥭',factTa:'ஆனி மாதம் தமிழ்நாட்டில் மாம்பழக் காலம்!',factEn:'Aani is mango season in Tamil Nadu.'},
+{ta:'ஆடி',en:'Aadi',l:'ஆ',e:'🌊',factTa:'ஆடிப்பெருக்கு அன்று ஆறுகளுக்கு நன்றி சொல்வார்கள்.',factEn:'On Aadi Perukku, people thank the rivers for water.'},
+{ta:'ஆவணி',en:'Avani',l:'ஆ',e:'🐘',factTa:'விநாயகர் சதுர்த்தி ஆவணி மாதத்தில் வருகிறது.',factEn:'Vinayagar Chaturthi falls in Avani.'},
+{ta:'புரட்டாசி',en:'Purattasi',l:'பு',e:'🎎',factTa:'புரட்டாசி காலத்தில் நவராத்திரிக்கு கொலு வைப்பார்கள்.',factEn:'Golu dolls are displayed for Navaratri around Purattasi.'},
+{ta:'ஐப்பசி',en:'Aippasi',l:'ஐ',e:'🎆',factTa:'தீபாவளி பொதுவாக ஐப்பசி மாதத்தில் கொண்டாடப்படும்.',factEn:'Deepavali is usually celebrated in Aippasi.'},
+{ta:'கார்த்திகை',en:'Karthigai',l:'கா',e:'🪔',factTa:'கார்த்திகை தீபத்தன்று வீடுகளில் வரிசையாக விளக்குகள் ஏற்றுவார்கள்.',factEn:'On Karthigai Deepam, homes glow with rows of lamps.'},
+{ta:'மார்கழி',en:'Margazhi',l:'மா',e:'⭐',factTa:'மார்கழியில் வீட்டு வாசலில் பெரிய கோலங்கள் போடுவார்கள்.',factEn:'In Margazhi, people draw big kolams at their doorsteps.'},
+{ta:'தை',en:'Thai',l:'தை',e:'🌾',factTa:'தை மாதத்தில் பொங்கல் கொண்டாடுவோம்!',factEn:'We celebrate Pongal in Thai!'},
+{ta:'மாசி',en:'Maasi',l:'மா',e:'🌙',factTa:'மகா சிவராத்திரி மாசி மாதத்தில் வருகிறது.',factEn:'Maha Sivarathri comes in Maasi.'},
+{ta:'பங்குனி',en:'Panguni',l:'ப',e:'🌷',factTa:'பங்குனி உத்திரம் பங்குனி மாதத்தின் திருவிழா.',factEn:'Panguni Uthiram is a festival in Panguni.'}
+];
+const EM_ENGLISH_MONTHS=[
+['January','J','🎆','January is the first month of the year and has 31 days.'],
+['February','F','❤️','February is the shortest month, with 28 days (29 in a leap year).'],
+['March','M','🌱','March has 31 days.'],
+['April','A','🌧️',"April Fools' Day is on April 1st!"],
+['May','M','🌸','Many flowers bloom in May in the northern half of the world.'],
+['June','J','☀️','June has 30 days.'],
+['July','J','🎇','July has 31 days.'],
+['August','A','🌈','August has 31 days.'],
+['September','S','🍎','September has 30 days.'],
+['October','O','🎃','October has 31 days.'],
+['November','N','🍂','November has 30 days.'],
+['December','D','❄️','December is the last month of the year.']
+].map(([name,l,e,fact])=>({ta:name,en:name,l,e,factTa:fact,factEn:fact}));
+let EM_STATE={lang:'ta',mode:'learn',i:0,quiz:null};
+function emMonthsData(){return EM_STATE.lang==='ta'?EM_TAMIL_MONTHS:EM_ENGLISH_MONTHS}
+function emSpeak(text){
+ if(!('speechSynthesis' in window)){emMonthsToast(EM_STATE.lang==='ta'?'இந்த சாதனத்தில் குரல் வசதி கிடைக்கவில்லை.':'Speech is not available on this device.');return}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=EM_STATE.lang==='ta'?'ta-IN':'en-US';u.rate=EM_STATE.lang==='ta'?.78:.85;
+ const v=speechSynthesis.getVoices().find(v=>EM_STATE.lang==='ta'?/^ta(-|_)/i.test(v.lang):/^en(-|_)/i.test(v.lang));if(v)u.voice=v;speechSynthesis.speak(u);
+}
+function emMonthsToast(msg){const el=document.getElementById('emStatus');if(el)el.textContent=msg}
+function renderEdumanMonthsScreen(){
+ const ta=EM_STATE.lang==='ta',m=emMonthsData()[EM_STATE.i],t=ta?{learn:'கற்க',quiz:'வினாடி வினா',sub:'ஒவ்வொரு மாதத்தையும் கேட்டு கற்றுக்கொள்வோம்!',ask:'நீங்கள் கேட்ட மாதம் எது?',hear:'🔊 ஒலியும் சொல்லும் கேள்',fact:'சுவாரசியம்!',prev:'முந்தைய',next:'அடுத்த',back:'முகப்புக்கு திரும்பு',correct:'சரி! 🎉',retry:'மீண்டும் முயற்சி செய்!'}:{learn:'Learn',quiz:'Quiz',sub:'Learn the months and their first letters!',ask:'Which month did you hear?',hear:'🔊 Hear month name',fact:'Fun fact!',prev:'Previous',next:'Next',back:'Back to Home',correct:'Correct! 🎉',retry:'Try again!'};
+ const data=emMonthsData();
+ let html=`<div class="em-wrap"><button class="btn-nav em-back" onclick="switchTab('home')">← ${t.back}</button>
+ <section class="em-hero"><h2>🗓️ ${ta?'மாதங்கள்':'Months'}</h2><p>${ta?'தமிழ் மற்றும் ஆங்கில மாதங்களையும் அவற்றின் தொடக்க எழுத்துகளையும் கேட்டு கற்றுக்கொள்.':'Learn Tamil and English month names and their starting letters by listening and playing.'}</p></section>
+ <div class="em-lang"><button class="em-pill ${ta?'on':''}" onclick="emSetLang('ta')">🇮🇳 தமிழ் மாதங்கள்</button><button class="em-pill ${!ta?'on':''}" onclick="emSetLang('en')">🇬🇧 English Months</button></div>
+ <div class="em-modes"><button class="em-pill ${EM_STATE.mode==='learn'?'on':''}" onclick="emSetMode('learn')">${ta?'📖 கற்க':'📖 Learn'}</button><button class="em-pill ${EM_STATE.mode==='quiz'?'on':''}" onclick="emSetMode('quiz')">🧠 ${ta?'வினாடி வினா':'Quiz'}</button></div>
+ <p class="em-sub">${t.sub}</p><div class="em-chips">${data.map((x,i)=>`<button class="em-chip ${i===EM_STATE.i?'on':''}" onclick="emGo(${i})">${ta?x.ta:x.en}<small>${ta?x.en:x.l}</small></button>`).join('')}</div>`;
+ if(EM_STATE.mode==='learn'){
+ html+=`<section class="em-card"><div class="em-big">${m.l}</div><div class="em-title">${ta?`${m.l} — ${m.ta}`:`${m.l} is for ${m.en}`} ${m.e}</div><button class="em-hear" onclick="emSpeak('${ta?m.ta:m.en}')">${t.hear}</button><div class="em-fact">💡 <b>${t.fact}</b><br>${ta?m.factTa:m.factEn}</div><div class="em-pn"><button onclick="emGo(${(EM_STATE.i+11)%12})">← ${t.prev}</button><button class="next" onclick="emGo(${(EM_STATE.i+1)%12})">${t.next} →</button></div></section>`;
+ }else{
+ if(!EM_STATE.quiz)emNewQuiz();
+ const q=EM_STATE.quiz;
+ html+=`<section class="em-card"><div class="em-big">🎧</div><div class="em-title">${t.ask}</div><button class="em-hear" onclick="emSpeak('${ta?data[q.a].ta:data[q.a].en}')">🔊 ${ta?'மீண்டும் கேள்':'Hear again'}</button><div class="em-opts">${q.opts.map(o=>`<button class="em-opt ${q.good&&o===q.a?'good':''} ${q.bad.includes(o)?'bad':''}" onclick="emAnswer(${o})">${ta?data[o].ta:data[o].en}<br><small>${data[o].l}</small></button>`).join('')}</div><div id="emStatus" class="em-status"></div></section>`;
+ }
+ html+='</div>';return html;
+}
+function emSetLang(lang){EM_STATE.lang=lang;EM_STATE.i=0;EM_STATE.quiz=null;const c=document.getElementById('mainContent');if(c)c.innerHTML=renderEdumanMonthsScreen()}
+function emSetMode(mode){EM_STATE.mode=mode;EM_STATE.quiz=null;const c=document.getElementById('mainContent');if(c)c.innerHTML=renderEdumanMonthsScreen()}
+function emGo(i){EM_STATE.i=(i+12)%12;EM_STATE.quiz=null;const c=document.getElementById('mainContent');if(c)c.innerHTML=renderEdumanMonthsScreen()}
+function emNewQuiz(){const a=Math.floor(Math.random()*12),others=[...Array(12).keys()].filter(x=>x!==a).sort(()=>Math.random()-.5).slice(0,3);EM_STATE.quiz={a,opts:[a,...others].sort(()=>Math.random()-.5),bad:[],good:false};setTimeout(()=>{const d=emMonthsData();emSpeak(EM_STATE.lang==='ta'?d[a].ta:d[a].en)},250)}
+function emAnswer(o){const q=EM_STATE.quiz;if(!q||q.good)return;const ta=EM_STATE.lang==='ta';if(o===q.a){q.good=true;const c=document.getElementById('mainContent');if(c)c.innerHTML=renderEdumanMonthsScreen();emMonthsToast(ta?'சரி! 🎉':'Correct! 🎉');setTimeout(()=>{EM_STATE.quiz=null;if(State.currentTab==='months'){const c2=document.getElementById('mainContent');if(c2)c2.innerHTML=renderEdumanMonthsScreen()}},1100)}else{q.bad.push(o);const c=document.getElementById('mainContent');if(c)c.innerHTML=renderEdumanMonthsScreen();emMonthsToast(ta?'மீண்டும் முயற்சி செய்!':'Try again!')}}
 </script>
 
 </body>
