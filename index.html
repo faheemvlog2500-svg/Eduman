@@ -157,20 +157,49 @@ function mic(){
     $("self").onclick=()=>result(true,"(self check)");return}
   if(busy){rec&&rec.stop();return}
   window.speechSynthesis&&speechSynthesis.cancel();
-  rec=new SR();rec.lang="en-US";rec.maxAlternatives=5;rec.interimResults=false;
-  let got=false;
-  rec.onstart=()=>{busy=true;$("mic").classList.add("on");$("mic").textContent="🎤 Listening…";$("fb").innerHTML=""};
-  rec.onresult=e=>{got=true;const alts=[...e.results[0]].map(a=>a.transcript);
-    const hit=alts.find(ok);result(!!hit,hit||alts[0])};
-  rec.onerror=e=>{got=true;$("fb").innerHTML='<span class="bad">'+(e.error==="not-allowed"||e.error==="service-not-allowed"?"Please allow microphone access.":"Couldn’t hear that, try again.")+"</span>"};
-  rec.onend=()=>{busy=false;$("mic").classList.remove("on");$("mic").textContent="🎤 Say it";if(!got)result(false,"")};
+  rec=new SR();rec.lang="en-US";rec.maxAlternatives=5;rec.interimResults=true;rec.continuous=true;
+  let done1=false,last="",tm=null;
+  const fin=(good,heard)=>{if(done1)return;done1=true;clearTimeout(tm);try{rec.stop()}catch(e){}
+    if(good)result(true,heard);
+    else if(heard)result(false,heard);
+    else{$("fb").innerHTML='<span class="bad">I didn’t hear anything</span><small>Tap Say it and speak the sound a little louder.</small>';say("I didn't hear you, try again",.9)}};
+  rec.onstart=()=>{busy=true;$("mic").classList.add("on");$("mic").textContent="🎤 Listening… say it";$("fb").innerHTML="";tm=setTimeout(()=>fin(false,last),5000)};
+  rec.onresult=e=>{for(let r=e.resultIndex;r<e.results.length;r++){const alts=[...e.results[r]].map(a=>a.transcript);last=alts[0]||last;const hit=alts.find(ok);if(hit)return fin(true,hit);
+      if(e.results[r].isFinal)return fin(false,alts[0])}};
+  rec.onerror=e=>{if(done1)return;done1=true;clearTimeout(tm);const m=(e.error==="not-allowed"||e.error==="service-not-allowed")?"Please allow microphone access.":(e.error==="no-speech"?"I didn’t hear anything. Tap Say it and speak louder.":"Couldn’t hear that, try again.");$("fb").innerHTML='<span class="bad">'+m+"</span>"};
+  rec.onend=()=>{busy=false;$("mic").classList.remove("on");$("mic").textContent="🎤 Say it";if(!done1)fin(false,last)};
+  try{rec.start()}catch(e){busy=false}
+}
+function mic2(){
+  if(!SR){return mic()}
+  if(busy){rec&&rec.stop();return}
+  window.speechSynthesis&&speechSynthesis.cancel();
+  rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;
+  let win=false,last="",err="",t=null;
+  const fin=()=>{try{rec.stop()}catch(e){}};
+  rec.onstart=()=>{busy=true;$("mic").classList.add("on");$("mic").textContent="🎤 Listening…";$("fb").innerHTML='<small>Say the sound clearly: “'+PS[K[i]]+'”</small>';t=setTimeout(fin,5000)};
+  rec.onresult=e=>{
+    for(let r=e.resultIndex;r<e.results.length;r++){
+      for(let n=0;n<e.results[r].length;n++){
+        const a=e.results[r][n].transcript;
+        if(a.trim())last=a.trim();
+        if(ok(a)){win=true;last=a.trim();fin();return}
+      }
+    }
+  };
+  rec.onerror=e=>{err=e.error};
+  rec.onend=()=>{clearTimeout(t);busy=false;$("mic").classList.remove("on");$("mic").textContent="🎤 Say it";
+    if(win)return result(true,last);
+    if(err==="not-allowed"||err==="service-not-allowed"){$("fb").innerHTML='<span class="bad">Please allow microphone access.</span>';return}
+    if(last)return result(false,last);
+    $("fb").innerHTML='<span class="bad">I couldn’t hear a sound</span><small>Speak a little louder, close to the phone, and hold the sound for a moment.</small>';say("I could not hear you, try again",.9)};
   try{rec.start()}catch(e){busy=false}
 }
 const card=$("card");
 card.addEventListener("pointermove",e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
   card.style.transform="rotateY("+(x*14)+"deg) rotateX("+(-y*14)+"deg)"});
 card.addEventListener("pointerleave",()=>card.style.transform="");
-$("listen").onclick=listen;$("mic").onclick=mic;
+$("listen").onclick=listen;$("mic").onclick=mic2;
 $("next").onclick=()=>{i=(i+1)%26;show(1);listen()};
 $("prev").onclick=()=>{i=(i+25)%26;show(1);listen()};
 $("grid").onclick=e=>{const n=e.target.dataset.n;if(n!=null){i=+n;show(1);listen()}};
