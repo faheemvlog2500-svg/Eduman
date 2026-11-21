@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Eduman Phonics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap">
+<style>
+:root{color-scheme:light;--y:#FFD43B;--yd:#F2B705;--yD:#C98F00;--yl:#FFF8CC;--w:#fff;--ink:#4A3800;--ok:#2FB65D;--bad:#E4574F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:"Fredoka","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;font-weight:600;color:var(--ink);min-height:100vh;background:linear-gradient(180deg,#3DA9F5 0%,#78C8FB 50%,#CFEDFF 100%) fixed;overflow-x:hidden;position:relative}
+.cloud{position:fixed;left:0;z-index:0;pointer-events:none;width:120px;height:36px;background:#fff;border-radius:40px;animation:dr 45s linear infinite;filter:drop-shadow(0 8px 6px rgba(30,100,170,.18))}
+.cloud::before,.cloud::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.cloud::before{width:56px;height:56px;left:16px;top:-28px}
+.cloud::after{width:44px;height:44px;left:60px;top:-20px}
+@keyframes dr{from{transform:translateX(-260px)}to{transform:translateX(calc(100vw + 260px))}}
+.sun{position:fixed;right:-34px;top:44px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6A0,#FFD43B 60%,#F7B500);box-shadow:0 0 40px 18px rgba(255,230,100,.6);z-index:0;pointer-events:none}
+.sun::before{content:"";position:absolute;inset:-46px;border-radius:50%;background:repeating-conic-gradient(rgba(255,244,160,.7) 0 10deg,transparent 10deg 30deg);-webkit-mask:radial-gradient(circle,transparent 54px,#000 58px,transparent 101px);mask:radial-gradient(circle,transparent 54px,#000 58px,transparent 101px);animation:sp 30s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.rainbow{position:fixed;left:-70px;bottom:0;width:320px;height:160px;z-index:0;pointer-events:none;opacity:.9;background:radial-gradient(circle 160px at 50% 100%,transparent 0 96px,#FF5B5B 96px 106px,#FFA63D 106px 116px,#FFE14A 116px 126px,#5ED36B 126px 136px,#4AA8FF 136px 146px,#9B6BFF 146px 156px,transparent 156px)}
+.bird{position:fixed;left:0;z-index:0;pointer-events:none;font-size:28px;animation:dr 24s linear infinite}
+.bird span{display:block;animation:wb 1.1s ease-in-out infinite}
+@keyframes wb{0%,100%{transform:scaleX(-1) translateY(0) rotate(-6deg)}50%{transform:scaleX(-1) translateY(-12px) rotate(6deg)}}
+header,main{position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:22px;color:#fff;text-shadow:0 2px 0 rgba(20,90,160,.45)}
+.logo i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:24px;font-weight:700;color:#fff;background:radial-gradient(circle at 30% 25%,#FFE680,var(--yd));box-shadow:0 4px 0 var(--yD),0 8px 12px rgba(201,143,0,.35)}
+.stars{background:var(--w);border-radius:999px;padding:7px 14px;font-weight:700;box-shadow:0 4px 0 #F3E39A,0 8px 14px rgba(201,143,0,.2)}
+main{max-width:560px;margin:0 auto;padding:32px 16px 28px}
+.scene{perspective:1000px}
+.card{position:relative;background:linear-gradient(160deg,#fff 0%,#FFFAD9 100%);border-radius:36px;padding:18px 16px 22px;text-align:center;transform-style:preserve-3d;transition:transform .15s ease-out;box-shadow:0 10px 0 #F3DD7A,0 24px 30px rgba(201,143,0,.28),inset 0 3px 0 #fff;border:3px solid #FFF0A0}
+.card.flip{animation:flip .55s cubic-bezier(.3,1.4,.5,1)}
+@keyframes flip{0%{transform:rotateY(-90deg) scale(.85);opacity:.2}100%{transform:rotateY(0) scale(1);opacity:1}}
+.stage{display:flex;align-items:center;justify-content:center;gap:6px;transform-style:preserve-3d}
+.letter{font-family:"Fredoka","Arial Black",Impact,sans-serif;font-weight:700;font-size:150px;line-height:1;color:#FFD43B;transform:translateZ(50px);
+text-shadow:1px 1px 0 #F2B705,2px 2px 0 #E8A900,3px 3px 0 #DDA000,4px 4px 0 #D29700,5px 5px 0 #C98F00,6px 6px 0 #BF8700,7px 8px 10px rgba(120,80,0,.4)}
+.letter small{font-size:88px;color:#fff;margin-left:4px;text-shadow:1px 1px 0 #F2B705,2px 2px 0 #E8A900,3px 3px 0 #DDA000,4px 4px 0 #D29700,5px 5px 0 #C98F00,6px 7px 9px rgba(120,80,0,.4)}
+.pic{width:130px;height:130px;border-radius:32px;display:grid;place-items:center;font-size:84px;background:radial-gradient(circle at 30% 25%,#fff,#FFF0A0);box-shadow:0 8px 0 #F3DD7A,0 16px 20px rgba(201,143,0,.3),inset 0 3px 0 #fff;transform:translateZ(80px) rotate(4deg);animation:bob 2.6s ease-in-out infinite}
+.pic span{filter:drop-shadow(0 6px 4px rgba(120,80,0,.3))}
+@keyframes bob{50%{transform:translateZ(80px) translateY(-8px) rotate(-3deg)}}
+.word{font-size:24px;font-weight:700;margin:16px 0 4px}
+.word b{color:var(--yD)}
+.snd{display:inline-block;background:var(--w);padding:4px 16px;border-radius:999px;font-size:18px;box-shadow:0 3px 0 #F3E39A}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+button{font:inherit;font-weight:700;border:0;border-radius:20px;padding:15px 24px;font-size:19px;color:var(--ink);cursor:pointer;background:linear-gradient(180deg,#FFE680,var(--y));box-shadow:0 7px 0 var(--yD),0 12px 16px rgba(201,143,0,.3),inset 0 2px 0 rgba(255,255,255,.7);transition:transform .08s,box-shadow .08s}
+button:active{transform:translateY(6px);box-shadow:0 1px 0 var(--yD),0 3px 6px rgba(201,143,0,.3)}
+button.alt{background:linear-gradient(180deg,#fff,#FFF6C4);box-shadow:0 6px 0 #EBD36B,0 10px 14px rgba(201,143,0,.2);padding:11px 20px;font-size:16px}
+button.rec{background:linear-gradient(180deg,#FFF,#FFF3B0);box-shadow:0 7px 0 var(--yD),0 12px 16px rgba(201,143,0,.3)}
+button.rec.on{background:linear-gradient(180deg,#FF8A80,var(--bad));color:#fff;box-shadow:0 7px 0 #B33A33;animation:pu 1s infinite}
+@keyframes pu{50%{transform:scale(1.07)}}
+#fb{min-height:62px;margin-top:16px;font-size:24px;font-weight:700}
+#fb small{display:block;font-weight:500;font-size:15px;opacity:.75}
+.ok{color:var(--ok)}.bad{color:var(--bad)}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-top:26px}
+.grid button{padding:9px 0 8px;font-size:20px;border-radius:14px;background:linear-gradient(180deg,#fff,#FFF6C4);box-shadow:0 5px 0 #EBD36B;position:relative}
+.grid button.cur{background:linear-gradient(180deg,#FFE680,var(--y));box-shadow:0 5px 0 var(--yD)}
+.grid button.done::after{content:"★";position:absolute;top:-9px;right:-3px;font-size:16px;color:var(--yd);text-shadow:0 1px 0 #fff}
+.note{font-size:15px;color:#fff;text-shadow:0 1px 3px rgba(20,90,160,.6);margin-top:18px;text-align:center}
+.burst{position:fixed;font-size:30px;pointer-events:none;z-index:9;animation:up 1.3s ease-out forwards}
+@keyframes up{to{transform:translate(var(--dx),-240px) rotate(240deg);opacity:0}}
+@media(max-width:380px){.letter{font-size:120px}.pic{width:104px;height:104px;font-size:66px}}
+</style>
+</head>
+<body>
+<div class="cloud" style="top:90px;zoom:1.3;animation-duration:50s;animation-delay:-12s"></div>
+<div class="cloud" style="top:250px;zoom:.8;animation-duration:36s;animation-delay:-28s"></div>
+<div class="cloud" style="top:55%;zoom:1.6;animation-duration:62s;animation-delay:-40s"></div>
+<div class="cloud" style="bottom:60px;zoom:1;animation-duration:44s;animation-delay:-5s"></div>
+<div class="sun"></div>
+<div class="rainbow"></div>
+<div class="bird" style="top:170px;animation-duration:20s;animation-delay:-4s"><span>🐦</span></div>
+<div class="bird" style="top:38%;font-size:22px;animation-duration:30s;animation-delay:-18s"><span>🕊️</span></div>
+<div class="bird" style="top:68%;font-size:24px;animation-duration:26s;animation-delay:-9s"><span>🐦</span></div>
+<main>
+  <div class="scene">
+    <div class="card" id="card">
+      <div class="stage">
+        <div class="letter" id="L"></div>
+        <div class="pic"><span id="E"></span></div>
+      </div>
+      <div class="word" id="W"></div>
+      <div class="snd" id="S"></div>
+      <div class="row">
+        <button id="listen">🔊 Listen</button>
+        <button id="mic" class="rec">🎤 Say it</button>
+      </div>
+      <div id="fb"></div>
+      <div class="row" style="margin-top:2px">
+        <button class="alt" id="prev">◀ Back</button>
+        <button class="alt" id="next">Next ▶</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Tap Listen, then Say it and repeat the sound.</p>
+</main>
+<script>
+const D={a:["ah","apple","🍎",["ay","eh","hey"]],b:["buh","ball","⚽",["bee","be"]],c:["kuh","cat","🐱",["see","sea"]],d:["duh","dog","🐶",["dee"]],e:["eh","egg","🥚",["ee"]],f:["fff","fish","🐟",["eff","ef"]],g:["guh","goat","🐐",["gee"]],h:["huh","hat","🎩",["aitch","age"]],i:["ih","ice cream","🍦",["eye","ai","ice"]],j:["juh","jellyfish","🪼",["jay","jelly"]],k:["kuh","kite","🪁",["kay","okay"]],l:["lll","lion","🦁",["el","ell"]],m:["mmm","monkey","🐒",["em"]],n:["nnn","nest","🪺",["en","and"]],o:["aw","orange","🍊",["oh","owe"]],p:["puh","pig","🐷",["pea","pee"]],q:["kwuh","queen","👸",["queue","cue"]],r:["rrr","rabbit","🐰",["are","our"]],s:["sss","sun","☀️",["ess","yes"]],t:["tuh","tiger","🐯",["tea","tee"]],u:["uh","umbrella","☂️",["you","up"]],v:["vvv","van","🚐",["vee"]],w:["wuh","watch","⌚",["double u"]],x:["ks","fox","🦊",["ex","x-ray","xylophone"]],y:["yuh","yo-yo","🪀",["why","wai"]],z:["zzz","zebra","🦓",["zee","zed"]]};
+const PS={a:"aah",b:"buh",c:"kuh",d:"duh",e:"eh",f:"fff",g:"guh",h:"huh",i:"ih",j:"juh",k:"kuh",l:"lll",m:"mmm",n:"nnn",o:"aw",p:"puh",q:"kwuh",r:"rrr",s:"sss",t:"tuh",u:"uh",v:"vvv",w:"wuh",x:"ks",y:"yuh",z:"zzz"};
+const NM={a:"ay",b:"bee",c:"see",d:"dee",e:"ee",f:"eff",g:"gee",h:"aitch",i:"eye",j:"jay",k:"kay",l:"el",m:"em",n:"en",o:"oh",p:"pee",q:"cue",r:"are",s:"ess",t:"tee",u:"you",v:"vee",w:"double you",x:"ex",y:"why",z:"zee"};
+const AC={a:["a","ah","aah","ae","aeh"],b:["b","buh","bu","ba","bah","bub"],c:["c","k","kuh","cuh","ku","ka","cah"],d:["d","duh","du","da","dah","dud"],e:["e","eh","eck","ed"],f:["f","ff","fff","fuh","fu","fa","fah"],g:["g","guh","gu","ga","gah","gug"],h:["h","huh","hu","ha","hah"],i:["i","ih","ick","ik"],j:["j","juh","ju","ja","jah","jug"],k:["k","c","kuh","ku","ka","kah"],l:["l","ll","lll","luh","lu","la","lah"],m:["m","mm","mmm","hmm","um","muh","mu","ma","mah"],n:["n","nn","nnn","nuh","nu","na","nah"],o:["o","aw","ah","ot","odd"],p:["p","puh","pu","pa","pah","pup"],q:["q","kw","kwuh","qu","kwa"],r:["r","rr","rrr","ruh","ru","rah"],s:["s","ss","sss","suh","su","sah"],t:["t","tuh","tu","ta","tah","tut"],u:["u","uh","ugh","up","ah"],v:["v","vv","vvv","vuh","vu","va","vah"],w:["w","wuh","wu","wa","wah"],x:["x","ks","ecks","eks","ex"],y:["y","yuh","yu","ya","yah"],z:["z","zz","zzz","zuh","zu","za","zah"]};
+const K=Object.keys(D);let i=0,done=new Set(),rec=null,busy=false;
+try{done=new Set(JSON.parse(localStorage.getItem("eduPh")||"[]"))}catch(e){}
+const $=id=>document.getElementById(id);
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function save(){try{localStorage.setItem("eduPh",JSON.stringify([...done]))}catch(e){}}
+let VO=null;
+function pick(){const v=(window.speechSynthesis&&speechSynthesis.getVoices())||[];VO=v.find(x=>/en[-_]US/i.test(x.lang)&&/female|samantha|google us|zira|aria/i.test(x.name))||v.find(x=>/^en/i.test(x.lang))||null}
+if(window.speechSynthesis){pick();speechSynthesis.onvoiceschanged=pick}
+function say(t,rate,cb){
+  const ss=window.speechSynthesis;
+  if(!ss){$("fb").innerHTML='<small>Sound isn’t supported in this browser. Try Chrome.</small>';cb&&cb();return}
+  let fin=false;const end=()=>{if(!fin){fin=true;cb&&cb()}};
+  const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=rate||.8;u.pitch=1.1;u.volume=1;if(VO)u.voice=VO;
+  u.onend=end;u.onerror=end;
+  try{ss.resume()}catch(e){}
+  ss.speak(u);
+  setTimeout(end,Math.max(4000,t.length*220/(rate||.8)));
+}
+function show(anim){
+  const k=K[i],d=D[k];
+  $("L").innerHTML=k.toUpperCase()+"<small>"+k+"</small>";
+  $("E").textContent=d[2];
+  $("W").innerHTML=k.toUpperCase()+" is for <b>"+d[1]+"</b>";
+  $("S").textContent=k.toUpperCase()+" – "+k+"   ·   sound: “"+PS[k]+"”";
+  $("fb").innerHTML="";
+  $("grid").innerHTML=K.map((c,n)=>`<button data-n="${n}" class="${n===i?"cur":""} ${done.has(c)?"done":""}">${c.toUpperCase()}</button>`).join("");
+  if(anim){const c=$("card");c.classList.remove("flip");void c.offsetWidth;c.classList.add("flip")}
+}
+function listen(){
+  const k=K[i],d=D[k],ss=window.speechSynthesis,b=$("listen");
+  if(ss)ss.cancel();
+  b.textContent="🔊 Playing…";
+  setTimeout(()=>say(NM[k]+". "+PS[k]+". "+PS[k]+". "+PS[k]+".",.6,()=>{b.textContent="🔊 Listen"}),150);
+}
+function ok(heard){
+  const k=K[i],h=heard.toLowerCase().replace(/[^a-z\s]/g,""),ws=h.split(/\s+/).filter(Boolean);
+  return ws.length>0&&ws.length<=3&&ws.every(w=>AC[k].includes(w));
+}
+function burst(){
+  ["⭐","✨","🌟","⭐","✨","🌟"].forEach((s,n)=>{const b=document.createElement("div");b.className="burst";b.textContent=s;
+    b.style.left=(25+n*10)+"%";b.style.top="55%";b.style.setProperty("--dx",(n%2?1:-1)*(20+n*12)+"px");document.body.appendChild(b);setTimeout(()=>b.remove(),1400)});
+}
+function result(good,heard){
+  const k=K[i];
+  if(good){done.add(k);save();
+    $("fb").innerHTML='<span class="ok">✅ Good job!</span><small>I heard: “'+heard+'”</small>';
+    const g=document.querySelector('[data-n="'+i+'"]');g&&g.classList.add("done");burst();
+    say("Good job!",.9,()=>setTimeout(()=>{i=(i+1)%26;show(1);listen()},500));
+  }else{
+    $("fb").innerHTML='<span class="bad">❌ Wrong, try again</span><small>I heard: “'+(heard||"nothing")+'”</small>';
+    say("Wrong, try again",.9,()=>setTimeout(listen,400));
+  }
+}
+function mic(){
+  if(!SR){$("fb").innerHTML='<small>Speech check isn’t supported in this browser. Use Chrome, or tap below.</small><button class="alt" id="self">I said it ✔</button>';
+    $("self").onclick=()=>result(true,"(self check)");return}
+  if(busy){rec&&rec.stop();return}
+  window.speechSynthesis&&speechSynthesis.cancel();
+  rec=new SR();rec.lang="en-US";rec.maxAlternatives=5;rec.interimResults=false;
+  let got=false;
+  rec.onstart=()=>{busy=true;$("mic").classList.add("on");$("mic").textContent="🎤 Listening…";$("fb").innerHTML=""};
+  rec.onresult=e=>{got=true;const alts=[...e.results[0]].map(a=>a.transcript);
+    const hit=alts.find(ok);result(!!hit,hit||alts[0])};
+  rec.onerror=e=>{got=true;$("fb").innerHTML='<span class="bad">'+(e.error==="not-allowed"||e.error==="service-not-allowed"?"Please allow microphone access.":"Couldn’t hear that, try again.")+"</span>"};
+  rec.onend=()=>{busy=false;$("mic").classList.remove("on");$("mic").textContent="🎤 Say it";if(!got)result(false,"")};
+  try{rec.start()}catch(e){busy=false}
+}
+const card=$("card");
+card.addEventListener("pointermove",e=>{const r=card.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+  card.style.transform="rotateY("+(x*14)+"deg) rotateX("+(-y*14)+"deg)"});
+card.addEventListener("pointerleave",()=>card.style.transform="");
+$("listen").onclick=listen;$("mic").onclick=mic;
+$("next").onclick=()=>{i=(i+1)%26;show(1);listen()};
+$("prev").onclick=()=>{i=(i+25)%26;show(1);listen()};
+$("grid").onclick=e=>{const n=e.target.dataset.n;if(n!=null){i=+n;show(1);listen()}};
+show();
+</script>
+</body>
+</html>
